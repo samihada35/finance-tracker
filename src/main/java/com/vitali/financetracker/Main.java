@@ -1,5 +1,6 @@
 package com.vitali.financetracker;
 
+import model.Transaction;
 import service.TransactionService;
 
 import java.util.Scanner;
@@ -30,7 +31,9 @@ public class Main {
                 String description = scanner.next();
                 service.addTransaction(type,amount,description);
             } else if (option == 2){
-                service.getAllTransactions();
+                 for(Transaction tr: service.getAllTransactions()){
+                    System.out.println(tr);
+                 }
             } else if (option == 3){
                 System.out.println("Current balance: " + service.calculateBalance());
             }
