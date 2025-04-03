@@ -1,14 +1,12 @@
 package com.vitali.financetracker;
 
-import model.Transaction;
+import service.TransactionService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    private static List<Transaction> transactions = new ArrayList<Transaction>();
+    private static TransactionService service = new TransactionService();
 
     public static void main(String[] args){
 
@@ -30,21 +28,11 @@ public class Main {
                 double amount = scanner.nextDouble();
                 System.out.println("Description of transaction? dollars/transport/fuel,etc");
                 String description = scanner.next();
-                transactions.add(new Transaction(type,amount,description));
+                service.addTransaction(type,amount,description);
             } else if (option == 2){
-                for (Transaction tr:transactions){
-                    System.out.println(tr);
-                }
+                service.getAllTransactions();
             } else if (option == 3){
-                double currentBalance = 0;
-                for (Transaction tr:transactions){
-                    if(tr.getType().equalsIgnoreCase("income")){
-                        currentBalance+=tr.getAmount();
-                    } else {
-                        currentBalance-=tr.getAmount();
-                    }
-                }
-                System.out.println("Current balance: " + currentBalance);
+                System.out.println("Current balance: " + service.calculateBalance());
             }
             if (option == 0){
                 break;
