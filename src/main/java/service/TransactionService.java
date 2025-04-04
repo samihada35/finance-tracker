@@ -1,12 +1,14 @@
 package service;
 
 import model.Transaction;
+import validators.InputValidation;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class TransactionService {
-    private List<Transaction> transactions = new ArrayList<Transaction>();
+    private static final List<Transaction> transactions = new ArrayList<Transaction>();
 
     private void validate(String type, double amount, String description){
         if (type == null || type.isBlank()){
@@ -19,8 +21,14 @@ public class TransactionService {
     };
 
     public void addTransaction(String type, double amount, String description){
-        validate(type,amount,description);
+        InputValidation.validateTransaction(type,amount,description);
         transactions.add(new Transaction(type,amount,description));
+    }
+
+    public static boolean deleteTransaction(int index){
+        InputValidation.validateIndex(index, transactions.size());
+        transactions.remove(index);
+        return true;
     }
 
     public List<Transaction> getAllTransactions(){
