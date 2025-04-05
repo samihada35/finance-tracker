@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class InputValidation {
     public static void validateIndex(int index, int collectionSize){
-        if (!isPositiveInt(index) || index>collectionSize-1) {
+        if (!notNegativeInt(index) || index>collectionSize-1) {
             throw new IllegalArgumentException("incorrect index, must exist in transaction list");
         }
     }
@@ -19,8 +19,8 @@ public class InputValidation {
         }
     }
 
-    public static boolean isPositiveInt(int value){
-        return value > 0;
+    public static boolean notNegativeInt(int value){
+        return value >= 0;
     }
     public static boolean isPositiveDouble(double value){
         return value > 0;
