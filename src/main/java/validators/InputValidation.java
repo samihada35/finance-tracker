@@ -10,8 +10,8 @@ public class InputValidation {
         }
     }
     public static void validateTransaction(String type, double amount, String description){
-        if (isEmptyString(type)){
-            throw new IllegalArgumentException("type must be filled with data");
+        if (!(type.equalsIgnoreCase("income")||type.equalsIgnoreCase("expense"))){
+            throw new IllegalArgumentException("type must be filled with 'income' or 'expense' text only");
         } else if (isEmptyString(description)){
             throw new IllegalArgumentException("description must be filled with data");
         } else if (!isPositiveDouble(amount)){
