@@ -1,11 +1,11 @@
 package model;
 
 public class Transaction {
-    private String type;
-    private double amount;
-    private String description;
+    private final TransactionType type;
+    private final double amount;
+    private final String description;
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
@@ -17,7 +17,7 @@ public class Transaction {
         return description;
     }
 
-    public Transaction(String type, double amount, String description) {
+    public Transaction(TransactionType type, double amount, String description) {
         this.description = description;
         this.amount = amount;
         this.type = type;
@@ -25,6 +25,6 @@ public class Transaction {
 
     @Override
     public String toString(){
-        return type.toUpperCase() + ": " + amount + " (" + description + ")";
+        return type.toString().toUpperCase() + ": " + amount + " (" + description + ")";
     }
 }
