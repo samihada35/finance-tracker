@@ -3,7 +3,8 @@ package service;
 import model.Transaction;
 import model.TransactionType;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StatisticService {
 
@@ -59,7 +60,7 @@ public class StatisticService {
         return totalExpense;
     }
 
-    public double gelAvgIncome(List<Transaction> transactions) {
+    public double getAvgIncome(List<Transaction> transactions) {
         double zeroIncome = 0.0;
         if (getIncomeTransactionsAmount(transactions) > 0) {
             return getTotalIncome(transactions) / getIncomeTransactionsAmount(transactions);
@@ -68,7 +69,7 @@ public class StatisticService {
         }
     }
 
-    public double gelAvgExpense(List<Transaction> transactions) {
+    public double getAvgExpense(List<Transaction> transactions) {
         double zeroExpense = 0.0;
         if (getExpenseTransactionsAmount(transactions) > 0) {
             return getTotalExpense(transactions) / getExpenseTransactionsAmount(transactions);
@@ -95,5 +96,51 @@ public class StatisticService {
             }
         }
         return maxExpense;
+    }
+
+    public void getIncomeStatByDescription(List<Transaction> transactions) {
+        Map<String, DoubleSummaryStatistics> statistic =
+                transactions.stream()
+                        .filter(c->c.type()==TransactionType.INCOME)
+                        .collect(Collectors.groupingBy(
+                                Transaction::description,
+                                Collectors.summarizingDouble(Transaction::amount)
+                        ));
+
+        for (Map.Entry<String, DoubleSummaryStatistics> entry : statistic.entrySet()) {
+            String description = entry.getKey();
+            DoubleSummaryStatistics summary = entry.getValue();
+
+            System.out.printf(
+                    "Income transactions %s: %d transactions, total = %.2f, average = %.2f%n",
+                    description,
+                    summary.getCount(),
+                    summary.getSum(),
+                    summary.getAverage()
+            );
+        }
+    }
+
+    public void getExpenseStatByDescription(List<Transaction> transactions) {
+        Map<String, DoubleSummaryStatistics> statistic =
+                transactions.stream()
+                        .filter(c->c.type()==TransactionType.EXPENSE)
+                        .collect(Collectors.groupingBy(
+                                Transaction::description,
+                                Collectors.summarizingDouble(Transaction::amount)
+                        ));
+
+        for (Map.Entry<String, DoubleSummaryStatistics> entry : statistic.entrySet()) {
+            String description = entry.getKey();
+            DoubleSummaryStatistics summary = entry.getValue();
+
+            System.out.printf(
+                    "Expense transactions %s: %d transactions, total = %.2f, average = %.2f%n",
+                    description,
+                    summary.getCount(),
+                    summary.getSum(),
+                    summary.getAverage()
+            );
+        }
     }
 }

@@ -50,6 +50,8 @@ public class Main {
                 for (Transaction tr : transactionService.getAllTransactions()) {
                     printStr(index++ + ". " + tr);
                 }
+                statisticService.getIncomeStatByDescription(transactionService.getAllTransactions());
+                statisticService.getExpenseStatByDescription(transactionService.getAllTransactions());
             }
             else if (option == 3) {
                 printStr("Current balance: " + transactionService.calculateBalance());
@@ -73,8 +75,8 @@ public class Main {
                 printStr("Total transactions: " + statisticService.getAllTransactionsAmount(transactionService.getAllTransactions()));
                 printStr("Total income: " + statisticService.getTotalIncome(transactionService.getAllTransactions()));
                 printStr("Total expense: " + statisticService.getTotalExpense(transactionService.getAllTransactions()));
-                printStr("Average income: " + statisticService.gelAvgIncome(transactionService.getAllTransactions()));
-                printStr("Average expense: " + statisticService.gelAvgExpense(transactionService.getAllTransactions()));
+                printStr("Average income: " + statisticService.getAvgIncome(transactionService.getAllTransactions()));
+                printStr("Average expense: " + statisticService.getAvgExpense(transactionService.getAllTransactions()));
                 printStr("Max income: " + statisticService.getMaxIncome(transactionService.getAllTransactions()));
                 printStr("Max expense: " + statisticService.getMaxExpense(transactionService.getAllTransactions()));
             }
