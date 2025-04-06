@@ -11,7 +11,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static final TransactionService service = new TransactionService();
+    private static final TransactionService transactionService = new TransactionService();
+    private static final StatisticService statisticService = new StatisticService();
 
     public static void main(String[] args) {
 
@@ -20,66 +21,68 @@ public class Main {
 
         while (true) {
             for (String str : menu) {
-                System.out.println(str);
+                printStr(str);
             }
             int option = Validators.returnInteger(scanner);
 
             try {
                 Validators.validateIndex(option, menu.size());
             } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e);
+                printStr("Error: " + e);
             }
 
             if (option == 1) {
-                System.out.println("Type of transaction? income/expense");
+                printStr("Type of transaction? income/expense");
                 String type = scanner.next();
-                System.out.println("Amount of transaction? example 22,0");
+                printStr("Amount of transaction? example 22,0");
 
                 double amount = scanner.nextDouble();
-                System.out.println("Description of transaction? dollars/transport/fuel,etc");
+                printStr("Description of transaction? dollars/transport/fuel,etc");
                 String description = scanner.next();
                 try {
-                    service.addTransaction(type, amount, description);
+                    transactionService.addTransaction(type, amount, description);
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Error: " + e);
+                    printStr("Error: " + e);
                 }
             }
             else if (option == 2) {
                 int index = 0;
-                for (Transaction tr : service.getAllTransactions()) {
-                    System.out.println(index++ + ". " + tr);
+                for (Transaction tr : transactionService.getAllTransactions()) {
+                    printStr(index++ + ". " + tr);
                 }
             }
             else if (option == 3) {
-                System.out.println("Current balance: " + service.calculateBalance());
+                printStr("Current balance: " + transactionService.calculateBalance());
             }
             else if (option == 4) {
                 int index = 0;
-                for (Transaction tr : service.getAllTransactions()) {
-                    System.out.println(index++ + ". " + tr);
+                for (Transaction tr : transactionService.getAllTransactions()) {
+                    printStr(index++ + ". " + tr);
                 }
-                System.out.println("Which transaction you want to delete?");
+                printStr("Which transaction you want to delete?");
                 try {
                     int deleteIndex = scanner.nextInt();
-                    if (TransactionService.deleteTransaction(deleteIndex)) {
-                        System.out.println("transaction was deleted");
+                    if (transactionService.deleteTransaction(deleteIndex)) {
+                        printStr("transaction was deleted");
                     }
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Error: " + e);
+                    printStr("Error: " + e);
                 }
             }
             else if (option == 5) {
-                System.out.println("Total transactions: " + StatisticService.getAllTransactionsAmount(service.getAllTransactions()));
-                System.out.println("Total income: " + StatisticService.getTotalIncome(service.getAllTransactions()));
-                System.out.println("Total expense: " + StatisticService.getTotalExpense(service.getAllTransactions()));
-                System.out.println("Average income: " + StatisticService.gelAvgIncome(service.getAllTransactions()));
-                System.out.println("Average expense: " + StatisticService.gelAvgExpense(service.getAllTransactions()));
-                System.out.println("Max income: " + StatisticService.getMaxIncome(service.getAllTransactions()));
-                System.out.println("Max expense: " + StatisticService.getMaxExpense(service.getAllTransactions()));
-            } else if (option == 0) {
+                printStr("Total transactions: " + statisticService.getAllTransactionsAmount(transactionService.getAllTransactions()));
+                printStr("Total income: " + statisticService.getTotalIncome(transactionService.getAllTransactions()));
+                printStr("Total expense: " + statisticService.getTotalExpense(transactionService.getAllTransactions()));
+                printStr("Average income: " + statisticService.gelAvgIncome(transactionService.getAllTransactions()));
+                printStr("Average expense: " + statisticService.gelAvgExpense(transactionService.getAllTransactions()));
+                printStr("Max income: " + statisticService.getMaxIncome(transactionService.getAllTransactions()));
+                printStr("Max expense: " + statisticService.getMaxExpense(transactionService.getAllTransactions()));
+            }
+            else if (option == 0) {
                 break;
             }
         }
+        scanner.close();
     }
 
     private static List<String> createMenu() {
@@ -92,5 +95,8 @@ public class Main {
         menu.add("5. Show statistics");
         menu.add("0. Exit");
         return menu;
+    }
+    private static void printStr(String str){
+        System.out.println(str);
     }
 }

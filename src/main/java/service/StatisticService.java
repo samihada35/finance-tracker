@@ -8,28 +8,28 @@ import java.util.List;
 public class StatisticService {
 
 
-    public static int getAllTransactionsAmount(List<Transaction> transactions) {
+    public int getAllTransactionsAmount(List<Transaction> transactions) {
         int amount = 0;
-        for (Transaction tr : transactions) {
+        for (Transaction _ : transactions) {
             amount = Math.incrementExact(amount);
         }
         return amount;
     }
 
-    public static int getIncomeTransactionsAmount(List<Transaction> transactions) {
+    public int getIncomeTransactionsAmount(List<Transaction> transactions) {
         int amount = 0;
         for (Transaction tr : transactions) {
-            if (tr.getType() == TransactionType.INCOME) {
+            if (tr.type() == TransactionType.INCOME) {
                 amount = Math.incrementExact(amount);
             }
         }
         return amount;
     }
 
-    public static int getExpenseTransactionsAmount(List<Transaction> transactions) {
+    public int getExpenseTransactionsAmount(List<Transaction> transactions) {
         int amount = 0;
         for (Transaction tr : transactions) {
-            if (tr.getType() == TransactionType.EXPENSE) {
+            if (tr.type() == TransactionType.EXPENSE) {
                 amount = Math.incrementExact(amount);
             }
         }
@@ -37,29 +37,29 @@ public class StatisticService {
     }
 
 
-    public static double getTotalIncome(List<Transaction> transactions) {
+    public double getTotalIncome(List<Transaction> transactions) {
         double totalIncome = 0.0;
 
         for (Transaction tr : transactions) {
-            if (tr.getType() == TransactionType.INCOME) {
-                totalIncome += tr.getAmount();
+            if (tr.type() == TransactionType.INCOME) {
+                totalIncome += tr.amount();
             }
         }
         return totalIncome;
     }
 
-    public static double getTotalExpense(List<Transaction> transactions) {
+    public double getTotalExpense(List<Transaction> transactions) {
         double totalExpense = 0.0;
 
         for (Transaction tr : transactions) {
-            if (tr.getType() == TransactionType.EXPENSE) {
-                totalExpense += tr.getAmount();
+            if (tr.type() == TransactionType.EXPENSE) {
+                totalExpense += tr.amount();
             }
         }
         return totalExpense;
     }
 
-    public static double gelAvgIncome(List<Transaction> transactions) {
+    public double gelAvgIncome(List<Transaction> transactions) {
         double zeroIncome = 0.0;
         if (getIncomeTransactionsAmount(transactions) > 0) {
             return getTotalIncome(transactions) / getIncomeTransactionsAmount(transactions);
@@ -68,7 +68,7 @@ public class StatisticService {
         }
     }
 
-    public static double gelAvgExpense(List<Transaction> transactions) {
+    public double gelAvgExpense(List<Transaction> transactions) {
         double zeroExpense = 0.0;
         if (getExpenseTransactionsAmount(transactions) > 0) {
             return getTotalExpense(transactions) / getExpenseTransactionsAmount(transactions);
@@ -77,21 +77,21 @@ public class StatisticService {
         }
     }
 
-    public static double getMaxIncome(List<Transaction> transactions) {
+    public double getMaxIncome(List<Transaction> transactions) {
         double maxIncome = 0.0;
         for (Transaction tr : transactions) {
-            if (tr.getType() == TransactionType.INCOME) {
-                maxIncome = Math.max(maxIncome, tr.getAmount());
+            if (tr.type() == TransactionType.INCOME) {
+                maxIncome = Math.max(maxIncome, tr.amount());
             }
         }
         return maxIncome;
     }
 
-    public static double getMaxExpense(List<Transaction> transactions) {
+    public double getMaxExpense(List<Transaction> transactions) {
         double maxExpense = 0.0;
         for (Transaction tr : transactions) {
-            if (tr.getType() == TransactionType.EXPENSE) {
-                maxExpense = Math.max(maxExpense, tr.getAmount());
+            if (tr.type() == TransactionType.EXPENSE) {
+                maxExpense = Math.max(maxExpense, tr.amount());
             }
         }
         return maxExpense;

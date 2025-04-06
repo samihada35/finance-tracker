@@ -28,11 +28,6 @@ public class Validators {
     public static boolean isPositiveDouble(double value) {
         return value > 0;
     }
-    public static boolean isPositiveInt(int value) {
-        if (value <= 0) {
-            throw new IllegalArgumentException("value must be >0");
-        } else return true;
-    }
 
     public static boolean isEmptyString(String str) {
         return str == null || str.isBlank();
