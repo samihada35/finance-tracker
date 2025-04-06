@@ -24,7 +24,7 @@ public class Transaction {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return type.toString().toUpperCase() + ": " + amount + " (" + description + ")";
     }
 }
