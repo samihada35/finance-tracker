@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class TransactionService {
-    private static final List<Transaction> transactions = new ArrayList<>();
+    private final List<Transaction> transactions = new ArrayList<>();
 
     public void addTransaction(String type, double amount, String description) {
         Validators.validateTransaction(type, amount, description);
@@ -20,7 +20,7 @@ public class TransactionService {
         }
     }
 
-    public static boolean deleteTransaction(int index) {
+    public boolean deleteTransaction(int index) {
         Validators.validateIndex(index, transactions.size());
         transactions.remove(index);
         return true;
@@ -33,10 +33,10 @@ public class TransactionService {
     public double calculateBalance() {
         double currentBalance = 0;
         for (Transaction tr : transactions) {
-            if (tr.getType().equals(TransactionType.INCOME)) {
-                currentBalance += tr.getAmount();
-            } else if (tr.getType().equals(TransactionType.EXPENSE)) {
-                currentBalance -= tr.getAmount();
+            if (tr.type().equals(TransactionType.INCOME)) {
+                currentBalance += tr.amount();
+            } else if (tr.type().equals(TransactionType.EXPENSE)) {
+                currentBalance -= tr.amount();
             }
         }
         return currentBalance;
